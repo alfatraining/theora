@@ -130,6 +130,10 @@ if(BUILD_EXAMPLES)
 		COMPILE_DEFINITIONS "${examples_compile_definitions}"
 		)
 
+	if("${CMAKE_SYSTEM_NAME}" MATCHES "Linux")
+		target_link_libraries(encoder_example m)
+	endif()
+
 	add_executable(dump_video examples/dump_video.c ${examples_add_srcs})
 	target_link_libraries(dump_video libtheora)
 	set_target_properties(dump_video PROPERTIES
