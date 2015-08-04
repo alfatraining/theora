@@ -19,16 +19,14 @@
  * The <tt>libtheoraenc</tt> C encoding API.*/
 
 #if !defined(_O_THEORA_THEORAENC_H_)
-# define _O_THEORA_THEORAENC_H_ (1)
-# include <stddef.h>
-# include <ogg/ogg.h>
-# include "codec.h"
+#define _O_THEORA_THEORAENC_H_ (1)
+#include <stddef.h>
+#include <ogg/ogg.h>
+#include "codec.h"
 
 #if defined(__cplusplus)
 extern "C" {
 #endif
-
-
 
 /**\name th_encode_ctl() codes
  * \anchor encctlcodes
@@ -379,7 +377,6 @@ extern "C" {
 
 /*@}*/
 
-
 /**\name TH_ENCCTL_SET_RATE_FLAGS flags
  * \anchor ratectlflags
  * These are the flags available for use with #TH_ENCCTL_SET_RATE_FLAGS.*/
@@ -388,7 +385,7 @@ extern "C" {
  * This can have a severe impact on quality, but is the only way to ensure that
  *  bitrate targets are met at low rates during sudden bursts of activity.
  * It is enabled by default.*/
-#define TH_RATECTL_DROP_FRAMES   (0x1)
+#define TH_RATECTL_DROP_FRAMES (0x1)
 /**Ignore bitrate buffer overflows.
  * If the encoder uses so few bits that the reservoir of available bits
  *  overflows, ignore the excess.
@@ -396,7 +393,7 @@ extern "C" {
  * At high rates this may cause the result to be undersized, but allows a
  *  client to play the stream using a finite buffer; it should normally be
  *  enabled, which is the default.*/
-#define TH_RATECTL_CAP_OVERFLOW  (0x2)
+#define TH_RATECTL_CAP_OVERFLOW (0x2)
 /**Ignore bitrate buffer underflows.
  * If the encoder uses so many bits that the reservoir of available bits
  *  underflows, ignore the deficit.
@@ -406,28 +403,21 @@ extern "C" {
 #define TH_RATECTL_CAP_UNDERFLOW (0x4)
 /*@}*/
 
-
-
 /**The quantization parameters used by VP3.*/
 extern const th_quant_info TH_VP31_QUANT_INFO;
 
 /**The Huffman tables used by VP3.*/
-extern const th_huff_code
- TH_VP31_HUFF_CODES[TH_NHUFFMAN_TABLES][TH_NDCT_TOKENS];
-
-
+extern const th_huff_code TH_VP31_HUFF_CODES[TH_NHUFFMAN_TABLES][TH_NDCT_TOKENS];
 
 /**\name Encoder state
    The following data structure is opaque, and its contents are not publicly
-    defined by this API.
+	defined by this API.
    Referring to its internals directly is unsupported, and may break without
-    warning.*/
+	warning.*/
 /*@{*/
 /**The encoder context.*/
-typedef struct th_enc_ctx    th_enc_ctx;
+typedef struct th_enc_ctx th_enc_ctx;
 /*@}*/
-
-
 
 /**\defgroup encfuncs Functions for Encoding*/
 /*@{*/
@@ -454,7 +444,7 @@ typedef struct th_enc_ctx    th_enc_ctx;
  * \param _info A #th_info struct filled with the desired encoding parameters.
  * \return The initialized #th_enc_ctx handle.
  * \retval NULL If the encoding parameters were invalid.*/
-extern th_enc_ctx *th_encode_alloc(const th_info *_info);
+extern th_enc_ctx* th_encode_alloc(const th_info* _info);
 /**Encoder control function.
  * This is used to provide advanced control the encoding process.
  * \param _enc    A #th_enc_ctx handle.
@@ -466,7 +456,7 @@ extern th_enc_ctx *th_encode_alloc(const th_info *_info);
  * \return Possible return values depend on the control code used.
  *          See \ref encctlcodes "the list of control codes" for
  *          specific values. Generally 0 indicates success.*/
-extern int th_encode_ctl(th_enc_ctx *_enc,int _req,void *_buf,size_t _buf_sz);
+extern int th_encode_ctl(th_enc_ctx* _enc, int _req, void* _buf, size_t _buf_sz);
 /**Outputs the next header packet.
  * This should be called repeatedly after encoder initialization until it
  *  returns 0 in order to get all of the header packets, in order, before
@@ -484,8 +474,7 @@ extern int th_encode_ctl(th_enc_ctx *_enc,int _req,void *_buf,size_t _buf_sz);
  *          produced.
  * \retval 0         No packet was produced, and no more header packets remain.
  * \retval TH_EFAULT \a _enc, \a _comments, or \a _op was <tt>NULL</tt>.*/
-extern int th_encode_flushheader(th_enc_ctx *_enc,
- th_comment *_comments,ogg_packet *_op);
+extern int th_encode_flushheader(th_enc_ctx* _enc, th_comment* _comments, ogg_packet* _op);
 /**Submits an uncompressed frame to the encoder.
  * \param _enc   A #th_enc_ctx handle.
  * \param _ycbcr A buffer of Y'CbCr data to encode.
@@ -508,7 +497,7 @@ extern int th_encode_flushheader(th_enc_ctx *_enc,
  * \retval TH_EINVAL The buffer size matches neither the frame size nor the
  *                    picture size the encoder was initialized with, or
  *                    encoding has already completed.*/
-extern int th_encode_ycbcr_in(th_enc_ctx *_enc,th_ycbcr_buffer _ycbcr);
+extern int th_encode_ycbcr_in(th_enc_ctx* _enc, th_ycbcr_buffer _ycbcr);
 /**Retrieves encoded video data packets.
  * This should be called repeatedly after each frame is submitted to flush any
  *  encoded packets, until it returns 0.
@@ -532,14 +521,12 @@ extern int th_encode_ycbcr_in(th_enc_ctx *_enc,th_ycbcr_buffer _ycbcr);
  * \retval 0         No packet was produced, and no more encoded video data
  *                    remains.
  * \retval TH_EFAULT \a _enc or \a _op was <tt>NULL</tt>.*/
-extern int th_encode_packetout(th_enc_ctx *_enc,int _last,ogg_packet *_op);
+extern int th_encode_packetout(th_enc_ctx* _enc, int _last, ogg_packet* _op);
 /**Frees an allocated encoder instance.
  * \param _enc A #th_enc_ctx handle.*/
-extern void th_encode_free(th_enc_ctx *_enc);
+extern void th_encode_free(th_enc_ctx* _enc);
 /*@}*/
 /*@}*/
-
-
 
 #if defined(__cplusplus)
 }
