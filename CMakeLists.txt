@@ -92,7 +92,7 @@ endif()
 add_library(libtheora ${srcs})
 target_link_libraries(libtheora libogg)
 set_target_properties(libtheora PROPERTIES
-	COMPILE_FLAGS ${compile_flags}
+	COMPILE_FLAGS "${compile_flags}"
 	COMPILE_DEFINITIONS "${compile_definitions}"
 	INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include"
 	INTERFACE_INCLUDE_DIRECTORIES "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>;$<INSTALL_INTERFACE:include>"
@@ -126,14 +126,15 @@ if(BUILD_EXAMPLES)
 	add_executable(encoder_example ${encoder_example_srcs} ${examples_add_srcs})
 	target_link_libraries(encoder_example libtheora)
 	set_target_properties(encoder_example PROPERTIES
-		COMPILE_FLAGS ${compile_flags}
-		COMPILE_DEFINITIONS ${examples_compile_definitions})
+		COMPILE_FLAGS "${compile_flags}"
+		COMPILE_DEFINITIONS "${examples_compile_definitions}"
+		)
 
 	add_executable(dump_video examples/dump_video.c ${examples_add_srcs})
 	target_link_libraries(dump_video libtheora)
 	set_target_properties(dump_video PROPERTIES
-		COMPILE_FLAGS ${compile_flags}
-		COMPILE_DEFINITIONS ${examples_compile_definitions}
+		COMPILE_FLAGS "${compile_flags}"
+		COMPILE_DEFINITIONS "${examples_compile_definitions}"
 		)
 
 	# just install these - don't export them
