@@ -108,7 +108,7 @@ install(TARGETS libtheora
 	RUNTIME DESTINATION bin COMPONENT bin)
 
 install(DIRECTORY "include"
-	DESTINATION "include" COMPONENT dev
+	DESTINATION . COMPONENT dev
 	FILES_MATCHING
 	PATTERN "*.h")
 
