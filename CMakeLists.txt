@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.0)
 project(theora VERSION 1.2.0)
 
 option(BUILD_EXAMPLES "Build example programs" ON)
-option(BUILD_SHARED_LIBS "Build shared library" OFF)
 if(MSVC)
 	option(MSVC_LINK_STATIC_RUNTIME "Use static linking of msvc runtime" OFF)
 endif()
@@ -25,63 +24,63 @@ endif()
 find_package(ogg REQUIRED CONFIG)
 
 list(APPEND srcs
-	include/theora/codec.h 
-	include/theora/theora.h 
-	include/theora/theoradec.h 
-	lib/internal.h 
-	lib/encint.h 
-	lib/enquant.h 
-	lib/huffenc.h 
-	lib/mathops.h 
-	lib/modedec.h 
-	lib/apiwrapper.h 
-	lib/bitpack.h 
-	lib/dct.h 
-	lib/decint.h 
-	lib/dequant.h 
-	lib/huffdec.h 
-	lib/huffman.h 
+	include/theora/codec.h
+	include/theora/theora.h
+	include/theora/theoradec.h
+	lib/internal.h
+	lib/encint.h
+	lib/enquant.h
+	lib/huffenc.h
+	lib/mathops.h
+	lib/modedec.h
+	lib/apiwrapper.h
+	lib/bitpack.h
+	lib/dct.h
+	lib/decint.h
+	lib/dequant.h
+	lib/huffdec.h
+	lib/huffman.h
 	lib/idct.c
-	lib/ocintrin.h 
-	lib/quant.h 
-	lib/analyze.c 
-	lib/encapiwrapper.c 
-	lib/encfrag.c 
-	lib/encinfo.c 
-	lib/encode.c 
-	lib/enquant.c 
-	lib/fdct.c 
-	lib/huffenc.c 
-	lib/mathops.c 
-	lib/mcenc.c 
-	lib/rate.c 
-	lib/tokenize.c 
-	lib/apiwrapper.c 
-	lib/bitpack.c 
-	lib/decapiwrapper.c 
-	lib/decinfo.c 
+	lib/ocintrin.h
+	lib/quant.h
+	lib/analyze.c
+	lib/encapiwrapper.c
+	lib/encfrag.c
+	lib/encinfo.c
+	lib/encode.c
+	lib/enquant.c
+	lib/fdct.c
+	lib/huffenc.c
+	lib/mathops.c
+	lib/mcenc.c
+	lib/rate.c
+	lib/tokenize.c
+	lib/apiwrapper.c
+	lib/bitpack.c
+	lib/decapiwrapper.c
+	lib/decinfo.c
 	lib/decode.c
-	lib/dequant.c 
-	lib/fragment.c 
-	lib/huffdec.c 
+	lib/dequant.c
+	lib/fragment.c
+	lib/huffdec.c
 	lib/idct.c
-	lib/info.c 
-	lib/internal.c 
+	lib/info.c
+	lib/internal.c
 	lib/quant.c
-	lib/state.c 
+	lib/state.c
 )
 
 if(MSVC)
 	list(APPEND compile_flags "/wd4554 /wd4700 /wd4244 /wd4018 /wd4267")
 	list(APPEND srcs
-		lib/x86_vc/x86cpu.h 
-		lib/x86_vc/mmxencfrag.c 
-		lib/x86_vc/mmxfdct.c 
-		lib/x86_vc/x86cpu.c 
-		lib/x86_vc/x86enc.c 
-		lib/x86_vc/mmxfrag.c 
-		lib/x86_vc/mmxidct.c 
-		lib/x86_vc/mmxstate.c 
+		lib/x86_vc/x86cpu.h
+		lib/x86_vc/mmxencfrag.c
+		lib/x86_vc/mmxfdct.c
+		lib/x86_vc/x86cpu.c
+		lib/x86_vc/x86enc.c
+		lib/x86_vc/mmxfrag.c
+		lib/x86_vc/mmxidct.c
+		lib/x86_vc/mmxstate.c
 		lib/x86_vc/x86state.c)
 	if ("${CMAKE_SIZEOF_VOID_P}" STREQUAL "4")
 		list(APPEND compile_definitions
@@ -89,7 +88,8 @@ if(MSVC)
 	endif()
 endif()
 
-add_library(libtheora ${srcs})
+# no shared library support in theora
+add_library(libtheora STATIC ${srcs})
 target_link_libraries(libtheora libogg)
 set_target_properties(libtheora PROPERTIES
 	COMPILE_FLAGS "${compile_flags}"
