@@ -113,7 +113,7 @@ install(DIRECTORY "include"
 	PATTERN "*.h")
 
 install(EXPORT ${CMAKE_PROJECT_NAME}Config
-	DESTINATION lib/cmake)
+	DESTINATION cmake)
 
 if(BUILD_EXAMPLES)
 	list(APPEND encoder_example_srcs "examples/encoder_example.c")
